@@ -2,18 +2,21 @@ package steps;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import utils.CommonMethods;
-import utils.Constants;
-import utils.ExcelReader;
+import utils.*;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class AddEmployeeSteps extends CommonMethods {
+    String fnFirstName;
+    String fnMiddleName;
+    String fnLastName;
+    static String empId;
     @When("user clicks on PIM option")
     public void user_clicks_on_pim_option() {
        // WebElement pimOption= driver.findElement(By.xpath("//a[@id='menu_pim_viewPimModule']"));
@@ -56,9 +59,14 @@ public class AddEmployeeSteps extends CommonMethods {
     }
     @When("user enters {string} and {string} and {string} in data driven format")
     public void user_enters_and_and_in_data_driven_format(String firstName, String middleName, String lastName) {
+        this.fnFirstName =firstName;
+        this.fnMiddleName =middleName;
+        this.fnLastName=lastName;
         sendText(firstName,addEmployeePage.firstNameField);
         sendText(middleName,addEmployeePage.middleNameField);
         sendText(lastName,addEmployeePage.lastNameField);
+        empId=addEmployeePage.employeeIdField.getAttribute("value");
+        System.out.println("Employee ID is ::"+empId);
     }
     @When("user enters firstname and middlename and verify employee has added")
     public void user_enters_firstname_and_middlename_and_verify_employee_has_added
@@ -127,4 +135,25 @@ public class AddEmployeeSteps extends CommonMethods {
     }
 
 
-}
+    @Then("verify employee is stored in database")
+    public void verifyEmployeeIsStoredInDatabase() {
+       // String query="select emp_firstname,emp_middle_name,emp_lastname from hs_hr_employees where employee_id="+empId+";";
+       String query= "select emp_firstName,emp_middle_name,emp_lastname from hs_hr_employees where employee_id=" +empId+ ";";
+        System.out.println(query);
+        List<Map<String,String>> mapList=DBUtils.fetch(query);
+       Map<String,String> firstRow= mapList.get(0);
+       String dbFirstName=firstRow.get("emp_firstName");
+       String dbMiddleName=firstRow.get("emp_middle_Name");
+       String dbLastName=firstRow.get("emp_lastName");
+        System.out.println("FirstName "+dbFirstName);
+        System.out.println("middleName "+dbMiddleName);
+        System.out.println("lastname "+dbLastName);
+       DOMConfigurator.configure("log4j.xml");
+       Log.info("FirstName");
+       Assert.assertEquals("FirstName from frontend does not match with firstname in database", fnFirstName,dbFirstName);
+       //Assert.assertEquals("MiddleName from frontend does not match with middlename in database", fnMiddleName,dbMiddleName);
+      // Assert.assertEquals("LastName from frontend does not match with lastname in database", fnLastName,dbLastName);
+
+
+    }
+        }

@@ -5,17 +5,20 @@ Background:
   Then user is successfully logged in the application
   When user clicks on PIM option
   And user clicks on add employee button
+
   @test
   Scenario: Adding one employee
     When user enters firstname and lastname
     And user clicks on save button
     Then employee added successfully
-    @sample
+
+  @sample
     Scenario: Adding one employee from feature file
       When user enters "adam" and "lovely" and "farwa"
       And user clicks on save button
       Then employee added successfully
-      @outLine
+
+  @outLine
       Scenario Outline: adding multiple employees using scenario outline
         When user enters "<firstName>" and "<middleName>" and "<lastName>" in data driven format
         And user clicks on save button
@@ -25,7 +28,8 @@ Background:
           |leny     |darzi     |fraud   |
           |paster   |surma     |shalli  |
           |sana     |caty      |aim     |
-        @datatable
+
+  @datatable
         Scenario: adding multiple employees using data table
           When user enters firstname and middlename and verify employee has added
           |firstName|middleName|lastName|
@@ -33,6 +37,12 @@ Background:
           |mary     |ms        |django  |
           |sadan    |ms       |adam     |
 
-          @excel
-          Scenario: adding multiple employees using excel file
-           When user adds multiple employees using excel from "EmployeeDataBatch16" and verify it
+  @excel
+    Scenario: adding multiple employees using excel file
+      When user adds multiple employees using excel from "EmployeeDataBatch16" and verify it
+  @Db
+  Scenario: Adding one employee from feature file
+    When user enters "adam" and "lovely" and "farwa" in data driven format
+    And user clicks on save button
+    Then employee added successfully
+    Then verify employee is stored in database

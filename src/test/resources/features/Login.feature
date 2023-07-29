@@ -28,3 +28,8 @@ Feature: Login related scenarios
             |admin1     |Hum@nhrm123 |Invalid credentials|
             |           |Hum@nhrm123 |Username cannot be empty|
             |  admin    |             |Password cannot be empty|
+  #@sprint2 @smoke @essLogin
+ # Scenario: valid ess username and password
+   # When user enters valid ess username and password
+   # And user clicks on login button
+    #Then user is successfully logged in the application
