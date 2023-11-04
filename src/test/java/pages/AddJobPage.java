@@ -14,6 +14,8 @@ public class AddJobPage extends CommonMethods {
     public WebElement jobDescF;
     @FindBy(id="jobTitle_note")
     public WebElement jobNoteF;
+    @FindBy(id="btnSave")
+    public WebElement jobSvBtn;
     public AddJobPage(){
         PageFactory.initElements(driver,this);
     }

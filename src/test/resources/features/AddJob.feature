@@ -12,5 +12,6 @@ Feature: adding new jobs in HRMS
       * user clicks on the add button
       * user enters the job "Java Instructor" title
       * user enters job description "Teaches java"
+    * user enters job note "Java programming note"
       * user clicks on the save button
       * verify data is properly stored in database
