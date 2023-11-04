@@ -134,7 +134,7 @@ public class AddEmployeeSteps extends CommonMethods {
         }
     }
 
-//66666777778888888
+//666667777788888889999
     @Then("verify employee is stored in database")
     public void verifyEmployeeIsStoredInDatabase() {
        // String query="select emp_firstname,emp_middle_name,emp_lastname from hs_hr_employees where employee_id="+empId+";";
